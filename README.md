@@ -549,8 +549,10 @@ The repository keeps the plain `userscript-maker` name for git installs; the imp
 forms, so scripts written against either name build.
 
 ```bash
-# install from GitHub Packages
+# install from GitHub Packages (the token needs the `read:packages` scope)
+gh auth refresh -s read:packages
 echo "@you:registry=https://npm.pkg.github.com" >> .npmrc
+echo "//npm.pkg.github.com/:_authToken=$(gh auth token)" >> .npmrc
 bun add -d @you/userscript-maker
 DRY_RUN=1 GITHUB_REPOSITORY_OWNER=you bash scripts/publish-github-packages.sh   # local dry run
 ```
