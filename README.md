@@ -552,7 +552,7 @@ forms, so scripts written against either name build.
 # install from GitHub Packages
 echo "@you:registry=https://npm.pkg.github.com" >> .npmrc
 bun add -d @you/userscript-maker
-DRY_RUN=1 GITHUB_REPOSITORY_OWNER=you bun run scripts/publish-github-packages.sh   # local dry run
+DRY_RUN=1 GITHUB_REPOSITORY_OWNER=you bash scripts/publish-github-packages.sh   # local dry run
 ```
 
 ## Troubleshooting

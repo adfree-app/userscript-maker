@@ -100,4 +100,5 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-        run: bun run scripts/publish-github-packages.sh
+        # `bun run` would try to parse the .sh as JS — run it with bash
+        run: bash scripts/publish-github-packages.sh
