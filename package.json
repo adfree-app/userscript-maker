@@ -1,6 +1,6 @@
 {
   "name": "userscript-maker",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Compile TypeScript userscripts (defineMeta + code) into standard .user.js files: lint, dev harness, catalog and release packing with Bun",
   "license": "MIT",
   "module": "./index.ts",
