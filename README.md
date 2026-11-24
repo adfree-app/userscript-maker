@@ -65,10 +65,30 @@ userscript-maker build scripts/hn-cleaner
 
 ## Install
 
-Bun-only (it uses `Bun.build` and `Bun.serve`):
+Bun-only (it uses `Bun.build` and `Bun.serve`). Three ways in — pick one:
 
 ```bash
-bun add -d github:adfree-app/userscript-maker      # from git
+# 1. GitHub Packages (published automatically on every release)
+gh auth refresh -s read:packages                 # the token needs read:packages once
+echo "@adfree-app:registry=https://npm.pkg.github.com" >> .npmrc
+echo "//npm.pkg.github.com/:_authToken=$(gh auth token)" >> .npmrc
+bun add -d @adfree-app/userscript-maker           # → 1.0.1, imports use the scoped name
+
+# 2. straight from git (no registry, always the latest main)
+bun add -d github:adfree-app/userscript-maker
+
+# 3. the release tarball
+bun add -d https://github.com/adfree-app/userscript-maker/releases/latest/download/userscript-maker.tgz
+```
+
+Installs 1 and 2 ship the same sources; only the specifier differs. The build shim accepts both
+`userscript-maker` and `@adfree-app/userscript-maker` (with `/define`, `/gm`, `/resources`,
+`/testing`), so a script builds either way — but `tsc` resolves the real folder name, so **import the
+name you installed**:
+
+```ts
+import { defineMeta } from '@adfree-app/userscript-maker' // GitHub Packages / git-scoped install
+import '@adfree-app/userscript-maker/gm'
 ```
 
 Two identical binaries land in `node_modules/.bin` — `userscript-maker` and the short `usm` — so
@@ -543,18 +563,15 @@ commit-analyzer → release-notes → changelog → `npm` (bump only, `npmPublis
 
 **GitHub Packages only accepts scoped names**, so the publish step runs
 `scripts/publish-github-packages.sh`: it copies the tarball inputs to a temp dir, renames the copy to
-`@<owner>/userscript-maker` (adding `publishConfig.registry = https://npm.pkg.github.com`) and runs
+`@adfree-app/userscript-maker` (`@<owner>/userscript-maker` if the repo moves) (adding `publishConfig.registry = https://npm.pkg.github.com`) and runs
 `npm publish` with the workflow's `GITHUB_TOKEN` (permissions: `contents: write`, `packages: write`).
 The repository keeps the plain `userscript-maker` name for git installs; the import shim accepts both
 forms, so scripts written against either name build.
 
 ```bash
-# install from GitHub Packages (the token needs the `read:packages` scope)
-gh auth refresh -s read:packages
-echo "@you:registry=https://npm.pkg.github.com" >> .npmrc
-echo "//npm.pkg.github.com/:_authToken=$(gh auth token)" >> .npmrc
-bun add -d @you/userscript-maker
-DRY_RUN=1 GITHUB_REPOSITORY_OWNER=you bash scripts/publish-github-packages.sh   # local dry run
+# the published package today
+bun add -d @adfree-app/userscript-maker@latest
+DRY_RUN=1 GITHUB_REPOSITORY_OWNER=adfree-app bash scripts/publish-github-packages.sh   # local dry run
 ```
 
 ## Troubleshooting
