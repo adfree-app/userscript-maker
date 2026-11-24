@@ -1,0 +1,14 @@
+/* Injected by userscript-maker as GM_addStyle */
+#userscript-maker-demo {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  z-index: 99999;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #00dc82;
+  color: #04121f;
+  font:
+    600 12px system-ui,
+    sans-serif;
+}

@@ -1,0 +1,87 @@
+{
+  "name": "userscript-maker",
+  "version": "0.2.0",
+  "description": "Compile TypeScript userscripts (defineMeta + code) into standard .user.js files: lint, dev harness, catalog and release packing with Bun",
+  "license": "MIT",
+  "module": "./index.ts",
+  "types": "./index.ts",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./define": "./src/define.ts",
+    "./gm": "./src/gm.ts",
+    "./resources": "./src/resources.ts",
+    "./testing": "./src/testing.ts",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "userscript-maker": "./src/cli.ts",
+    "usm": "./src/cli.ts"
+  },
+  "files": [
+    "index.ts",
+    "src",
+    "!src/**/*.test.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "bun": ">=1.2.0"
+  },
+  "keywords": [
+    "userscript",
+    "tampermonkey",
+    "violentmonkey",
+    "greasemonkey",
+    "bun",
+    "build"
+  ],
+  "scripts": {
+    "prepare": "bun scripts/setup-hooks.ts",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "verify": "bun run lint && bun run fmt:check && bun run typecheck && bun test",
+    "build:fixtures": "bun src/cli.ts build test/fixtures/demo test/fixtures/hn-cleaner test/fixtures/copy-code test/fixtures/sticky-table-head test/fixtures/github-stars --external lodash=https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js#_",
+    "check:fixtures": "bun src/cli.ts check test/fixtures/demo test/fixtures/hn-cleaner test/fixtures/copy-code test/fixtures/sticky-table-head test/fixtures/github-stars --external lodash=https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js#_ --strict",
+    "dev:fixtures": "bun src/cli.ts dev test/fixtures/demo test/fixtures/hn-cleaner test/fixtures/copy-code test/fixtures/sticky-table-head test/fixtures/github-stars --external lodash=https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js#_",
+    "prepublishOnly": "bun run verify",
+    "release": "semantic-release"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^7.0.0",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^11.0.1",
+    "@types/bun": "latest",
+    "happy-dom": "^21.0.4",
+    "husky": "^9.1.7",
+    "oxfmt": "^0.80.0",
+    "oxlint": "^1.95.0",
+    "semantic-release": "^26.0.1",
+    "typescript": "^7.0.2"
+  },
+  "peerDependencies": {
+    "happy-dom": "^21.0.0",
+    "typescript": "^6 || ^7"
+  },
+  "peerDependenciesMeta": {
+    "happy-dom": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.9.0",
+    "@types/bytes": "^3.1.6",
+    "@types/semver": "^7.8.0",
+    "bytes": "^3.1.2",
+    "commander": "^15.1.0",
+    "fflate": "^0.8.3",
+    "mrmime": "^2.0.1",
+    "picocolors": "^1.1.1",
+    "pretty-bytes": "^7.2.0",
+    "semver": "^7.8.6"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "rules": {
+    "no-console": "off",
+    "no-underscore-dangle": [
+      "warn",
+      {
+        "allow": [
+          "__DEV__",
+          "__PROD__",
+          "__NAME__",
+          "__VERSION__",
+          "__BUILD_TIME__",
+          "__BUILD_HASH__",
+          "__USERSCRIPT_MAKER_RESOURCES__"
+        ]
+      }
+    ],
+    "unicorn/no-array-callback-reference": "off",
+    "unicorn/prefer-number-properties": "off",
+    "unicorn/no-null": "off",
+    "unicorn/require-module-specifiers": "off",
+    "typescript/no-explicit-any": "warn",
+    "typescript/no-non-null-assertion": "off"
+  },
+  "ignorePatterns": ["dist/**", "node_modules/**"],
+  "overrides": [
+    {
+      "files": ["test/**/*.ts", "test/fixtures/**/*.ts"],
+      "rules": {
+        "typescript/no-explicit-any": "off",
+        "no-console": "off"
+      }
+    }
+  ]
+}

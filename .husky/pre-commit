@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+# Runs the package checks before a commit, but only when the staged changes
+# touch this package — the repo may also hold other projects.
+set -e
+
+pkg=packages/userscript-maker
+[ -d "$pkg" ] || pkg=.
+
+staged=$(git diff --cached --name-only --diff-filter=ACMR)
+if [ -n "$staged" ] && ! printf '%s\n' "$staged" | grep -q "^$pkg/"; then
+  exit 0
+fi
+
+cd "$pkg"
+bun run verify

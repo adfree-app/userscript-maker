@@ -1,0 +1,8 @@
+/* Dim what you already read, and collapse the "is hiring" ads. */
+tr.athing[data-hn-visited] .titleline > a {
+  opacity: 0.45;
+}
+
+tr.athing[data-hn-ad] {
+  display: none;
+}
