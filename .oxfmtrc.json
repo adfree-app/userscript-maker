@@ -6,5 +6,5 @@
   "trailingComma": "none",
   "arrowParens": "avoid",
   "sortPackageJson": false,
-  "ignorePatterns": ["dist/**", "test/fixtures/**/*.html", "*.tgz"]
+  "ignorePatterns": ["dist/**", "test/fixtures/**/*.html", "*.tgz", "CHANGELOG.md"]
 }
